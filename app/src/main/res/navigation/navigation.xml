@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/navigation" app:startDestination="@id/homeFragment">
+
+    <fragment android:id="@+id/homeFragment" android:name="be.marche.appstock.home.HomeFragment"
+              android:label="HomeFragment">
+        <action android:id="@+id/action_homeFragment_to_produitListFragment" app:destination="@id/produitListFragment"/>
+        <action android:id="@+id/action_homeFragment_to_categorieListFragment"
+                app:destination="@id/categorieListFragment"/>
+    </fragment>
+    <fragment android:id="@+id/categorieListFragment" android:name="be.marche.appstock.categorie.CategorieListFragment"
+              android:label="CategorieListFragment"/>
+    <fragment android:id="@+id/produitListFragment" android:name="be.marche.appstock.produit.ProduitListFragment"
+              android:label="ProduitListFragment"/>
+</navigation>
