@@ -2,6 +2,7 @@ package be.marche.appstock.produit
 
 import androidx.lifecycle.LiveData
 import be.marche.appstock.database.StockDao
+import be.marche.appstock.entity.Categorie
 import be.marche.appstock.entity.Produit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -15,6 +16,10 @@ class ProduitRepository(private val stockDao: StockDao) : KoinComponent {
 
     fun getProduitById(ficheId: Int): LiveData<Produit> {
         return stockDao.getProduitById(ficheId)
+    }
+
+    fun getProduitsByCategorie(categorie: Categorie): LiveData<List<Produit>> {
+        return stockDao.getProduitsByCategorie(categorie.id)
     }
 
     suspend fun insertProduits(fiches: List<Produit>) {

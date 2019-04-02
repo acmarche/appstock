@@ -4,16 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import be.marche.appstock.R
 import be.marche.appstock.entity.Categorie
 import kotlinx.android.synthetic.main.categorie_list_fragment.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CategorieListFragment : Fragment(), CategorieListAdapter.CategorieListAdapterListener {
 
-    val categorieViewModel: CategorieViewModel by viewModel()
+    val categorieViewModel: CategorieViewModel by sharedViewModel()
 
     private var listener: CategorieListAdapter.CategorieListAdapterListener? = null
     private lateinit var categorieListAdapter: CategorieListAdapter
@@ -33,6 +37,7 @@ class CategorieListFragment : Fragment(), CategorieListAdapter.CategorieListAdap
             categories = mutableListOf()
         }
 
+        activity?.title = getString(R.string.app_name)
         listener = this
         categorieListAdapter = CategorieListAdapter(categories, listener)
 
@@ -52,6 +57,8 @@ class CategorieListFragment : Fragment(), CategorieListAdapter.CategorieListAdap
     }
 
     override fun onCategorieSelected(categorie: Categorie) {
-
+        categorieViewModel.categorie = categorieViewModel.getCagorieById(categorie.id)
+        findNavController().navigate(be.marche.appstock.R.id.action_categorieListFragment_to_produitListFragment)
     }
+
 }

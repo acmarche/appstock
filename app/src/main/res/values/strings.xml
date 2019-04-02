@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AppStock</string>
+    <string name="message_no_connectivity">Pour continuer, connectez vous à internet</string>
 </resources>

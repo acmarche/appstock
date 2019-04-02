@@ -3,6 +3,7 @@ package be.marche.appstock.produit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import be.marche.appstock.api.StockService
+import be.marche.appstock.entity.Categorie
 import be.marche.appstock.entity.Produit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +18,7 @@ class ProduitViewModel(
     val stockService: StockService,
     val produitRepository: ProduitRepository
 ) : ViewModel() {
-    
+
     private val viewModelJob = Job()
     private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
@@ -30,17 +31,20 @@ class ProduitViewModel(
         loadProduits()
     }
 
-    private lateinit var fiches: LiveData<List<Produit>>
-    var fiche: LiveData<Produit>? = null
+    private lateinit var produits: LiveData<List<Produit>>
 
     private fun loadProduits() {
-        fiches = produitRepository.getAllProduits()
+        produits = produitRepository.getAllProduits()
     }
 
-    fun getProduits(): LiveData<List<Produit>> = fiches
+    fun getProduits(): LiveData<List<Produit>> = produits
 
-    fun getCagorieById(ficheId: Int): LiveData<Produit> {
-        return produitRepository.getProduitById(ficheId)
+    fun getProduitById(produitId: Int): LiveData<Produit> {
+        return produitRepository.getProduitById(produitId)
+    }
+
+    fun getProduitsByCategorie(categorie: Categorie): LiveData<List<Produit>> {
+        return produitRepository.getProduitsByCategorie(categorie)
     }
 
     fun changeQuantite(produit: Produit, quantite: Int) {
@@ -52,7 +56,7 @@ class ProduitViewModel(
 
     fun saveReal(produit: Produit, quantite: Int) {
 
-        var ok: Boolean = false
+        var ok = false
         viewModelScope.launch {
 
             val request = stockService.updateProduit(produit.id, quantite)
@@ -63,20 +67,18 @@ class ProduitViewModel(
 
                 override fun onResponse(call: Call<Produit>, response: Response<Produit>) {
                     response.let {
-                        val enfant = it.body()
-                        if (enfant != null) {
+                        val quantiteResponse = it.body()
+                        if (quantiteResponse != null) {
                             Timber.i("zeze reponse produit ok ${response.body()}")
                             ok = true
                         } else {
                             Timber.i("zeze reponse produit ko ${response.body()}")
                         }
                     }
+                    if (ok)
+                        changeQuantite(produit, quantite)
                 }
             })
-            if (ok)
-                changeQuantite(produit, quantite)
         }
-
     }
-
 }

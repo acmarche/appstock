@@ -1,13 +1,12 @@
 package be.marche.appstock.api
 
-
 import android.app.Application
 import android.content.Context
 import android.net.*
 import android.os.Build
 import androidx.lifecycle.LiveData
 
-class ConnectivityLiveData(val application: Application?) : LiveData<Boolean>() {
+class ConnectivityLiveData(application: Application?) : LiveData<Boolean>() {
 
     internal val networkRequest: NetworkRequest
     internal val connectivityManager: ConnectivityManager

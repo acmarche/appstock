@@ -35,4 +35,9 @@ interface StockDao {
 
     @Update
     fun updateProduit(produit: Produit)
+
+    @Query("SELECT * FROM produit WHERE categorie_id = :categorieId")
+    fun getProduitsByCategorie(categorieId: Int): LiveData<List<Produit>>
+
+
 }

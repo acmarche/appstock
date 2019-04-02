@@ -10,7 +10,10 @@
                 app:destination="@id/categorieListFragment"/>
     </fragment>
     <fragment android:id="@+id/categorieListFragment" android:name="be.marche.appstock.categorie.CategorieListFragment"
-              android:label="CategorieListFragment"/>
+              android:label="CategorieListFragment">
+        <action android:id="@+id/action_categorieListFragment_to_produitListFragment"
+                app:destination="@id/produitListFragment"/>
+    </fragment>
     <fragment android:id="@+id/produitListFragment" android:name="be.marche.appstock.produit.ProduitListFragment"
               android:label="ProduitListFragment"/>
 </navigation>

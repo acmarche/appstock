@@ -23,7 +23,7 @@ interface StockService {
     fun getAllProduits(
     ): Deferred<List<Produit>>
 
-    @POST("update/{id}")
+    @POST("update/{id}/{quantite}")
     fun updateProduit(
         @Path("id") produitId: Int,
         @Path("quantite") quantite: Int
