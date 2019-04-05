@@ -3,6 +3,9 @@
     <string name="message_no_connectivity">Pour continuer, connectez vous à internet</string>
     <string name="logo">Logo</string>
     <string name="help_text">Utilisez le bouton plus et moins pour changer les quantités</string>
+    <string name="btn_moins">Moins</string>
+    <string name="btn_plus">Plus</string>
+    <string name="photo_produit">photo_produit</string>
     <plurals name="nbr_produits">
         <item quantity="one">%d produit</item>
         <item quantity="other">%d produits</item>
