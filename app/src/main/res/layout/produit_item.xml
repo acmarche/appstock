@@ -31,7 +31,7 @@
 
             <TextView
                 android:id="@+id/produitNomView"
-                android:layout_width="wrap_content"
+                android:layout_width="291dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
