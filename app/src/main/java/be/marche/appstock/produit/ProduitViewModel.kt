@@ -2,12 +2,10 @@ package be.marche.appstock.produit
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import be.marche.appstock.api.StockService
 import be.marche.appstock.entity.Categorie
 import be.marche.appstock.entity.Produit
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,14 +16,6 @@ class ProduitViewModel(
     val stockService: StockService,
     val produitRepository: ProduitRepository
 ) : ViewModel() {
-
-    private val viewModelJob = Job()
-    private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
 
     init {
         loadProduits()
@@ -54,7 +44,7 @@ class ProduitViewModel(
         }
     }
 
-    fun saveReal(produit: Produit, quantite: Int) {
+    fun saveAsync(produit: Produit, quantite: Int) {
 
         var ok = false
         viewModelScope.launch {

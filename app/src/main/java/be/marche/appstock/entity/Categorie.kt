@@ -9,4 +9,6 @@ data class Categorie(
     val id: Int,
     val nom: String,
     val description: String?
-)
+) {
+    var nbproduits: Int = 0
+}

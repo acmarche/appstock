@@ -13,20 +13,13 @@ class CategorieViewModel(
     val categorieRepository: CategorieRepository
 ) : ViewModel(
 ) {
-    private val viewModelJob = Job()
-    private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
 
     init {
         loadCategories()
     }
 
     private lateinit var categories: LiveData<List<Categorie>>
-    var categorie: LiveData<Categorie>? = null
+    var categorie: Categorie? = null
 
     private fun loadCategories() {
         categories = categorieRepository.getAllCategories()

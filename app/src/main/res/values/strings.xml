@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">AppStock</string>
     <string name="message_no_connectivity">Pour continuer, connectez vous à internet</string>
+    <string name="logo">Logo</string>
+    <string name="help_text">Utilisez le bouton plus et moins pour changer les quantités</string>
+    <plurals name="nbr_produits">
+        <item quantity="one">%d produit</item>
+        <item quantity="other">%d produits</item>
+    </plurals>
 </resources>

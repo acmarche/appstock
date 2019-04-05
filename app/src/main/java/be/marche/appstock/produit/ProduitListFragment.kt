@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import be.marche.appstock.R
@@ -15,18 +13,15 @@ import be.marche.appstock.api.ConnectivityLiveData
 import be.marche.appstock.categorie.CategorieViewModel
 import be.marche.appstock.entity.Categorie
 import be.marche.appstock.entity.Produit
-import kotlinx.android.synthetic.main.produit_item.*
-import kotlinx.android.synthetic.main.produit_item.view.*
 import kotlinx.android.synthetic.main.produit_list_fragment.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class ProduitListFragment : Fragment(), ProduitListAdapter.ProduitListAdapterListener {
 
     val produitViewModel: ProduitViewModel by viewModel()
     val categorieViewModel: CategorieViewModel by sharedViewModel()
-    lateinit var categorie: Categorie
+    var categorie: Categorie? = null
 
     private var listener: ProduitListAdapter.ProduitListAdapterListener? = null
     private lateinit var produitListAdapter: ProduitListAdapter
@@ -42,19 +37,10 @@ class ProduitListFragment : Fragment(), ProduitListAdapter.ProduitListAdapterLis
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         if (!::produits.isInitialized) {
             produits = mutableListOf<Produit>()
         }
-
-        categorieViewModel.categorie?.observe(this, Observer { categorie ->
-            this.categorie = categorie
-            activity?.title = categorie.nom
-
-            produitViewModel.getProduitsByCategorie(categorie).observe(viewLifecycleOwner, Observer { produits ->
-                //this.produits = produits.toMutableList()
-                UpdateUi(produits)
-            })
-        })
 
         listener = this
         produitListAdapter = ProduitListAdapter(produits, listener)
@@ -63,9 +49,16 @@ class ProduitListFragment : Fragment(), ProduitListAdapter.ProduitListAdapterLis
             layoutManager = LinearLayoutManager(context)
             adapter = produitListAdapter
         }
-        //viewLifecycleOwner au lieu de this
-        // LiveData supprime les observateurs chaque fois que la vue du fragment est détruite:
-        produitViewModel.getProduits().observe(viewLifecycleOwner, Observer { UpdateUi(it) })
+
+        categorie = categorieViewModel.categorie
+        if (categorie != null) {
+            activity?.title = categorie!!.nom
+            produitViewModel.getProduitsByCategorie(categorie!!).observe(viewLifecycleOwner, Observer { produits ->
+                UpdateUi(produits)
+            })
+        } else {
+            produitViewModel.getProduits().observe(viewLifecycleOwner, Observer { UpdateUi(it) })
+        }
     }
 
     private fun UpdateUi(newproduits: List<Produit>) {
@@ -75,7 +68,7 @@ class ProduitListFragment : Fragment(), ProduitListAdapter.ProduitListAdapterLis
     }
 
     override fun onProduitSelected(produit: Produit) {
-        Toast.makeText(getActivity(), "produit " + produit.nom, Toast.LENGTH_SHORT).show()
+        Toast.makeText(getActivity(), getString(R.string.help_text), Toast.LENGTH_SHORT).show()
     }
 
     override fun onBtnLessSelected(produit: Produit) {
@@ -94,9 +87,9 @@ class ProduitListFragment : Fragment(), ProduitListAdapter.ProduitListAdapterLis
                 true -> {
                     when (action) {
                         1 -> if (produit.quantite > 0) {
-                            produitViewModel.saveReal(produit, produit.quantite - 1)
+                            produitViewModel.saveAsync(produit, produit.quantite - 1)
                         }
-                        2 -> produitViewModel.saveReal(produit, produit.quantite + 1)
+                        2 -> produitViewModel.saveAsync(produit, produit.quantite + 1)
                     }
                 }
                 false -> {

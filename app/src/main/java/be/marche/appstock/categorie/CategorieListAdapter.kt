@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import be.marche.appstock.R
 import be.marche.appstock.entity.Categorie
+import be.marche.appstock.produit.ProduitViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CategorieListAdapter(
     private val categories: List<Categorie>,
@@ -27,10 +29,17 @@ class CategorieListAdapter(
     override fun onBindViewHolder(holder: CategorieViewHolder, position: Int) {
         val categorie = categories[position]
 
+        val quantityString = holder.itemView.resources.getQuantityString(
+            R.plurals.nbr_produits,
+            categorie.nbproduits,
+            categorie.nbproduits
+        )
+
         with(holder) {
             cardView.setOnClickListener(this@CategorieListAdapter)
             cardView.tag = categorie
             categorieNom.text = categorie.nom
+            categorieNbrProduit.text = quantityString
         }
     }
 

@@ -12,7 +12,7 @@ interface StockDao {
     /**
      * CategorieListFragment
      */
-    @Query("SELECT * FROM categorie")
+    @Query("SELECT * FROM categorie ORDER BY nom ASC")
     fun getAllCategories(): LiveData<List<Categorie>>
 
     @Query("SELECT * FROM categorie WHERE id = :categorieId")
@@ -24,7 +24,7 @@ interface StockDao {
     /**
      * Produit
      */
-    @Query("SELECT * FROM produit")
+    @Query("SELECT * FROM produit ORDER BY nom ASC")
     fun getAllProduits(): LiveData<List<Produit>>
 
     @Query("SELECT * FROM produit WHERE id = :produitId")
@@ -36,7 +36,7 @@ interface StockDao {
     @Update
     fun updateProduit(produit: Produit)
 
-    @Query("SELECT * FROM produit WHERE categorie_id = :categorieId")
+    @Query("SELECT * FROM produit WHERE categorie_id = :categorieId ORDER BY nom ASC")
     fun getProduitsByCategorie(categorieId: Int): LiveData<List<Produit>>
 
 
