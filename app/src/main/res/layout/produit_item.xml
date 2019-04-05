@@ -40,7 +40,7 @@
                 android:textStyle="bold"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent"
-                tools:text="Le livre de la jungle" />
+                tools:text="Serrure interieur nouvel model pour duobac" />
 
             <TextView
                 android:id="@+id/produitQuantite"
