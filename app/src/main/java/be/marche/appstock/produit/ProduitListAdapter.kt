@@ -43,12 +43,12 @@ class ProduitListAdapter(
             produitNomView.text = produit.nom
             produitQuantiteView.text = produit.quantite.toString()
 
-            if (produit.image!!.isNotEmpty()) {
+         /*   if (produit.image!!.isNotEmpty()) {
                 Picasso.get()
                     .load(produit.image)
                     .placeholder(R.drawable.ic_image_black_24dp)
                     .into(produitPhotoView)
-            }
+            }*/
         }
     }
 
