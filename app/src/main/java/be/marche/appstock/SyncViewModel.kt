@@ -18,9 +18,6 @@ class SyncViewModel(
 
     private val viewModelJob = Job()
     private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-    var token: String? = null
-
-    private suspend fun getDetail(login: String) = stockService.getAllProduits().await()
 
     fun refreshData() {
 
