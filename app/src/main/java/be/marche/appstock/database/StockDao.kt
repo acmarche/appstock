@@ -27,6 +27,9 @@ interface StockDao {
     @Query("SELECT * FROM produit ORDER BY nom ASC")
     fun getAllProduits(): LiveData<List<Produit>>
 
+    @Query("SELECT * FROM produit ORDER BY nom ASC")
+    fun getAllProduits2(): List<Produit>
+
     @Query("SELECT * FROM produit WHERE id = :produitId")
     fun getProduitById(produitId: Int): LiveData<Produit>
 

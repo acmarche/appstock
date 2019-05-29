@@ -1,5 +1,6 @@
 package be.marche.appstock.api
 
+import androidx.lifecycle.LiveData
 import be.marche.appstock.entity.Categorie
 import be.marche.appstock.entity.Produit
 import kotlinx.coroutines.Deferred
@@ -20,8 +21,8 @@ interface StockService {
     ): Deferred<List<Categorie>>
 
     @GET("produits")
-    fun getAllProduits(
-    ): Deferred<List<Produit>>
+    suspend fun getAllProduits(
+    ): List<Produit>
 
     @POST("update/{id}/{quantite}")
     fun updateProduit(

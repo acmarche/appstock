@@ -10,8 +10,12 @@ import org.koin.core.KoinComponent
 
 class ProduitRepository(private val stockDao: StockDao) : KoinComponent {
 
-    fun getAllProduits(): LiveData<List<Produit>> {
+    suspend fun getAllProduits(): LiveData<List<Produit>> {
         return stockDao.getAllProduits()
+    }
+
+    fun getAllProduits2(): List<Produit> {
+        return stockDao.getAllProduits2()
     }
 
     fun getProduitById(ficheId: Int): LiveData<Produit> {

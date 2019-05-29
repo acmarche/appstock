@@ -1,11 +1,10 @@
 package be.marche.appstock.produit
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import be.marche.appstock.api.StockService
 import be.marche.appstock.entity.Categorie
 import be.marche.appstock.entity.Produit
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,17 +16,19 @@ class ProduitViewModel(
     val produitRepository: ProduitRepository
 ) : ViewModel() {
 
-    init {
-        loadProduits()
+    // from livedata-2.2.0-alpha01
+    var produits = liveData(Dispatchers.IO) {
+        val emps = produitRepository.getAllProduits2()
+        emit(emps)
     }
 
-    private lateinit var produits: LiveData<List<Produit>>
-
-    private fun loadProduits() {
-        produits = produitRepository.getAllProduits()
+    //plante
+    //api complete ??
+    var employee3 = liveData(Dispatchers.IO) {
+        emitSource(produitRepository.getAllProduits())
+        val lastProduits = stockService.getAllProduits()
+        produitRepository.insertProduits(lastProduits)
     }
-
-    fun getProduits(): LiveData<List<Produit>> = produits
 
     fun getProduitById(produitId: Int): LiveData<Produit> {
         return produitRepository.getProduitById(produitId)

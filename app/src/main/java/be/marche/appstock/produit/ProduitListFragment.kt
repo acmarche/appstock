@@ -57,7 +57,8 @@ class ProduitListFragment : Fragment(), ProduitListAdapter.ProduitListAdapterLis
                 UpdateUi(produits)
             })
         } else {
-            produitViewModel.getProduits().observe(viewLifecycleOwner, Observer { UpdateUi(it) })
+        //    produitViewModel.getProduits().observe(viewLifecycleOwner, Observer { UpdateUi(it) })
+           produitViewModel.employee3.observe(viewLifecycleOwner, Observer { UpdateUi(it) })
         }
     }
 
