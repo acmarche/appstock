@@ -10,7 +10,7 @@ import org.koin.core.KoinComponent
 
 class ProduitRepository(private val stockDao: StockDao) : KoinComponent {
 
-    suspend fun getAllProduits(): LiveData<List<Produit>> {
+    fun getAllProduits(): LiveData<List<Produit>> {
         return stockDao.getAllProduits()
     }
 

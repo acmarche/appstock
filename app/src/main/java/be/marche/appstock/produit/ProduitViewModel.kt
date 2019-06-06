@@ -22,8 +22,6 @@ class ProduitViewModel(
         emit(emps)
     }
 
-    //plante
-    //api complete ??
     var employee3 = liveData(Dispatchers.IO) {
         emitSource(produitRepository.getAllProduits())
         val lastProduits = stockService.getAllProduits()
