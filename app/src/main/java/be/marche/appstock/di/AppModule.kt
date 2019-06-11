@@ -8,7 +8,6 @@ import be.marche.appstock.categorie.CategorieRepository
 import be.marche.appstock.categorie.CategorieViewModel
 import be.marche.appstock.produit.ProduitRepository
 import be.marche.appstock.produit.ProduitViewModel
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidApplication
