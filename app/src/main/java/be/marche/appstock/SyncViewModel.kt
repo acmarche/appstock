@@ -1,12 +1,10 @@
 package be.marche.appstock
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import be.marche.appstock.api.StockService
 import be.marche.appstock.categorie.CategorieRepository
 import be.marche.appstock.produit.ProduitRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class SyncViewModel(
@@ -16,28 +14,16 @@ class SyncViewModel(
 
 ) : ViewModel() {
 
-    private val viewModelJob = Job()
-    private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
     fun refreshData() {
 
         viewModelScope.launch {
-
-            val request = stockService.getAll()
-            val response = request.await()
-
-            response.let {
-                categorieRepository.insertCategories(it.categories)
-                produitRepository.insertProduits(it.produits)
+            val response = stockService.getAll()
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    categorieRepository.insertCategories(it.categories)
+                    produitRepository.insertProduits(it.produits)
+                }
             }
-
         }
     }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
-    
-    
 }

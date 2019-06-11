@@ -51,7 +51,7 @@ class HomeFragment : Fragment() {
                     messageView.visibility = View.INVISIBLE
                     btnProduitView.visibility = View.VISIBLE
                     btnCategorieView.visibility = View.VISIBLE
-              //      syncViewModel.refreshData()
+                    syncViewModel.refreshData()
                 }
                 false -> {
                     messageView.visibility = View.VISIBLE
